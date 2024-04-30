@@ -1,0 +1,35 @@
+.global_btn {
+    min-width: fit-content;
+    height: 28px;
+    border: 1px solid #402f00;
+    border-radius:8px;
+    padding: 3px 10px;
+    color: #000;
+    cursor: pointer;
+  }
+  
+  .textYellow {
+    color: var(--sandTan);
+  }
+  .notYellow {
+    color: #000;
+  }
+  .highlighted {
+    background: var(--sandTanShadow);
+  }
+  
+  .solid {
+    background: var(--nightBlue);
+  }
+  
+  .btn_img {
+    width: 14px;
+    margin-left: 1rem; 
+  }
+  
+  .global_btn_text {
+    font-weight: 500;
+    font-size: 13px;
+    font-family: "Roboto", sans-serif;
+  }
+  

@@ -1,0 +1,26 @@
+.card_div {
+  margin: 1rem;
+  background: var(--sandTan);
+  border: 1px solid black;
+  padding: 0.5rem;
+  border-radius: 8px;
+  max-height: auto;
+  // min-height: 30%;
+  .title_div {
+    .title {
+      font-size: 15px;
+      // border: 1px solid rgb(220, 217, 217);
+      margin-bottom: 0.5rem;
+      text-align: center;
+      // text-decoration: underline;
+      // border-radius: 8px;
+    }
+  }
+  .desc_div {
+    .desc {
+      font-size: 13px;
+      // border: 1px solid rgb(220, 217, 217);
+      // border-radius: 8px;
+    }
+  }
+}
