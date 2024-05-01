@@ -4,25 +4,25 @@ import GlobalBtn from "../GlobalBtn";
 import { hasFormSubmit } from "@testing-library/user-event/dist/utils";
 
 const Modal = ({
-  closeModal,
-  // addLocalStorage,
+  closeModalClick,
+  addLocalStorage,
   columnId,
   columns,
   title,
   desc,
   handleFormInput,
-  // formData,x
-  saveCard
+  formData,
+  setFormData
 }) => {
   console.log(columnId, "columnId");
 
-  // const handleFormSubmit = () =>{
-  //    setFormData({
-  //     ...formData,
-  //     id : columnId
-  //    })
-  //    addLocalStorage(columnId)
-  // }
+  const handleFormSubmit = () =>{
+     setFormData({
+      ...formData,
+      id : columnId
+     })
+     addLocalStorage(columnId)
+  }
   return (
     <div className="modal_div">
       <div className="title_div">
@@ -47,10 +47,10 @@ const Modal = ({
         </div>
       </div>{" "}
       <div className="modal_btn">
-        <GlobalBtn text="Close Modal" btnAction={() => closeModal()} />{" "}
+        <GlobalBtn text="Close Modal" btnAction={() => closeModalClick()} />{" "}
         <GlobalBtn
           text="Add Card"
-          btnAction={()=>saveCard(columnId)}
+          btnAction={()=>handleFormSubmit(columnId)}
         />
       </div>
     </div>

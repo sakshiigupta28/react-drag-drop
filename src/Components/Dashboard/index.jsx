@@ -6,33 +6,18 @@ import Modal from "../Modal";
 import EditCard from "../EditCard";
 
 const Dashboard = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [editCardIndex, setEditCardIndex] = useState(null);
-  const [columnData, setColumnData] = useState({
-    colCardOne: [],
-    colCardTwo: [],
-    colCardThree: [],
-  });
+  const [newCard, setNewCard] = useState(false);
+  const [editCard, setEditCard] = useState(false);
+  const [columnId, setColumnId] = useState("");
+  const [colCardOne, setColCardOne] = useState([]);
+  const [colCardTwo, setColCardTwo] = useState([]);
+  const [colCardThree, setColCardThree] = useState([]);
   const [formData, setFormData] = useState({
     id: "",
     title: "",
     desc: "",
   });
-
-  const { title, desc } = formData;
-
-  const columns = ["colCardOne", "colCardTwo", "colCardThree"];
-
-  useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("columnData"));
-    if (storedData) {
-      setColumnData(storedData);
-    }
-  }, []); // Empty dependency array to run only once when component mounts
-
-  useEffect(() => {
-    localStorage.setItem("columnData", JSON.stringify(columnData));
-  }, [columnData]); // Saving columnData to localStorage whenever it changes
+  const { title, desc, id } = formData;
 
   const handleFormInput = (e) => {
     setFormData({
@@ -40,78 +25,159 @@ const Dashboard = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const columns = ["colCardOne", "colCardTwo", "colCardThree"];
 
-  const addNewCard = (columnId) => {
-    setFormData({ id: columnId, title: "", desc: "" });
-    setShowModal(true);
-    setEditCardIndex(null);
+  const addLocalStorage = (columnId) => {
+    console.log(columnId, "columnId");
+    // columns.forEach((column) => {
+    const storedData = localStorage.getItem(columnId);
+    const parsedData = storedData ? JSON.parse(storedData) : [];
+    localStorage.setItem(columnId, JSON.stringify([...parsedData, formData]));
+    // });
+
+    setColCardOne(JSON.parse(localStorage.getItem("colCardOne")));
+    setColCardTwo(JSON.parse(localStorage.getItem("colCardTwo")));
+    setColCardThree(JSON.parse(localStorage.getItem("colCardThree")));
+
+    setFormData({
+      id: "",
+      title: "",
+      desc: "",
+    });
+    setNewCard(false);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  useEffect(() => {
+    columns.forEach((column) => {
+      const storedData = localStorage.getItem(column);
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        switch (column) {
+          case "colCardOne":
+            setColCardOne(parsedData);
+            break;
+          case "colCardTwo":
+            setColCardTwo(parsedData);
+            break;
+          case "colCardThree":
+            setColCardThree(parsedData);
+            break;
+          default:
+            break;
+        }
+      }
+    });
+  }, []);
+
+  const addNewCard = (id) => {
+    setColumnId(id);
+    setNewCard(true);
   };
 
-  const saveCard = () => {
-    const columnName = columns[formData.id];
-    if (editCardIndex !== null) {
-      setColumnData((prevData) => ({
-        ...prevData,
-        [columnName]: prevData[columnName].map((card, index) =>
-          index === editCardIndex ? formData : card
-        ),
-      }));
-    } else {
-      setColumnData((prevData) => ({
-        ...prevData,
-        [columnName]: [...prevData[columnName], formData],
-      }));
-    }
-    setShowModal(false);
+  const closeModalClick = () => {
+    setNewCard();
   };
 
-  const editCard = (card, idx) => {
-    setEditCardIndex(idx);
-    setFormData(card);
-    setShowModal(true);
+  const edit = (card) => {
+    console.log(card, "cnuhu");
+    setFormData({
+      title: card.title,
+      desc: card.desc,
+    });
+    setEditCard(true);
   };
 
+  console.log(formData);
   return (
     <div className="dashboard_div">
       <div className="heading">Dashboard</div>
       <div className="col_layout">
-        {columns.map((columnId, columnIndex) => (
-          <div className="col" key={columnIndex}>
-            <div className="newCardBtn">
-              <GlobalBtn
-                text="Add New Card"
-                btnType="solid"
-                btnAction={() => addNewCard(columnIndex)}
-              />
-            </div>
-            {columnData[columnId].map((card, idx) => (
-              <AddCard
-                key={idx}
-                id={idx + 1}
-                title={card?.title}
-                desc={card?.desc}
-                clickAction={() => editCard(card, idx)}
-              />
-            ))}
+        <div className="col">
+          <div className="newCardBtn">
+            <GlobalBtn
+              text="Add New Card"
+              btnType="solid"
+              btnAction={() => addNewCard(columns[0])}
+            />
           </div>
-        ))}
-      </div>
+          {colCardOne?.map((card, idx) => (
+            <AddCard
+              id={idx + 1}
+              title={card?.title}
+              desc={card?.desc}
+              clickAction={() => edit(card)}
+            />
+          ))}
+        </div>
+        <div className="col">
+          <div className="newCardBtn">
+            <GlobalBtn
+              text="Add New Card"
+              btnType="solid"
+              btnAction={() => addNewCard(columns[1])}
+            />
+          </div>
+
+          {colCardTwo?.map((card, idx) => (
+            <AddCard
+              id={idx + 1}
+              title={card?.title}
+              desc={card?.desc}
+              clickAction={() => edit(card)}
+            />
+          ))}
+        </div>
+        <div className="col">
+          <div className="newCardBtn">
+            <GlobalBtn
+              text="Add New Card"
+              btnType="solid"
+              btnAction={() => addNewCard(columns[2])}
+            />
+          </div>
+
+          {colCardThree?.map((card, idx) => (
+            <AddCard
+              id={idx + 1}
+              title={card?.title}
+              desc={card?.desc}
+              clickAction={() => edit(card)}
+            />
+          ))}
+        </div>
+      </div>{" "}
       <div className="modal_box">
-        {showModal && (
+        {newCard && (
           <Modal
-            closeModal={closeModal}
-            saveCard={saveCard}
+            closeModalClick={closeModalClick}
+            addLocalStorage={addLocalStorage}
             formData={formData}
+            setFormData={setFormData}
             title={title}
             desc={desc}
             handleFormInput={handleFormInput}
+            columns={columns}
+            columnId={columnId}
+          />
+        )}
+        {editCard && (
+          <EditCard
+            setEditCard={setEditCard}
+            addLocalStorage={addLocalStorage}
+            colCardOne={colCardOne}
+            colCardTwo={colCardTwo}
+            colCardThree={colCardThree}
+            title={title}
+            desc={desc}
+            handleFormInput={handleFormInput}
+            columns={columns}
+            columnId={columnId}
+            formData={formData}
+            setFormData={setFormData}
           />
         )}
       </div>
+      {/* <GlobalBtn text="clear" btnAction={localStorage.clear()} /> */}
     </div>
   );
 };

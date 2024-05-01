@@ -17,7 +17,7 @@ const EditCard = ({
 }) => {
 
   const getContent = () => {
-    if (colCardOne.length > 0) {
+    if (colCardOne?.length > 0) {
       const lastElement = colCardOne[colCardOne.length - 1];
       setFormData({
         title: lastElement.title,
@@ -29,7 +29,7 @@ const EditCard = ({
         desc: desc,
       });
     }
-    if (colCardTwo.length > 0) {
+    if (colCardTwo?.length > 0) {
         const lastElement = colCardTwo[colCardTwo.length - 1];
         setFormData({
           title: lastElement.title,
@@ -41,7 +41,7 @@ const EditCard = ({
           desc: desc,
         });
       }
-      if (colCardThree.length > 0) {
+      if (colCardThree?.length > 0) {
         const lastElement = colCardThree[colCardThree.length - 1];
         setFormData({
           title: lastElement.title,
