@@ -1,9 +1,11 @@
 .modal_div {
+  left: 20%;
   margin: 1rem;
   border: 1px solid black;
   padding: 0.5rem;
   border-radius: 8px;
-//   width: 35%;
+  width: 160%;
+  max-height: 160%;
 background-color: #ffffff;
 
   
@@ -31,7 +33,7 @@ background-color: #ffffff;
       textarea{
         border: none;
         max-width: 99%;
-        width: 99%;
+        width: 98%;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;

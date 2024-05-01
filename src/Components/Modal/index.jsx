@@ -14,7 +14,7 @@ const Modal = ({
   // formData,x
   saveCard
 }) => {
-  console.log(columnId, "columnId");
+  // console.log(columnId, "columnId");
 
   // const handleFormSubmit = () =>{
   //    setFormData({
