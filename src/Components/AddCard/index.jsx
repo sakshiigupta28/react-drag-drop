@@ -1,7 +1,16 @@
 import React from "react";
 import "./styles.scss";
+// import GlobalBtn from "../GlobalBtn";
 
-const AddCard = ({ title, desc, clickAction, id, draggable, onDragStart }) => {
+const AddCard = ({
+  title,
+  desc,
+  clickAction,
+  draggable,
+  onDragStart,
+  // handleDeleteCard,
+  // columnId
+}) => {
   return (
     <div
       className="card_div"
@@ -15,6 +24,10 @@ const AddCard = ({ title, desc, clickAction, id, draggable, onDragStart }) => {
       <div className="desc_div">
         <div className="desc">{desc}</div>
       </div>
+      {/* <GlobalBtn
+        text='Delete'
+        btnAction={() => handleDeleteCard(columnId)}
+      /> */}
     </div>
   );
 };

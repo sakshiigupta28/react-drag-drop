@@ -1,28 +1,18 @@
 import React from "react";
 import "./styles.scss";
 import GlobalBtn from "../GlobalBtn";
-import { hasFormSubmit } from "@testing-library/user-event/dist/utils";
 
 const Modal = ({
   closeModal,
-  // addLocalStorage,
   columnId,
-  columns,
   title,
   desc,
   handleFormInput,
-  // formData,x
-  saveCard
+  handleSubmit,
+  error,
+  editCardIndex,
 }) => {
-  // console.log(columnId, "columnId");
-
-  // const handleFormSubmit = () =>{
-  //    setFormData({
-  //     ...formData,
-  //     id : columnId
-  //    })
-  //    addLocalStorage(columnId)
-  // }
+  console.log(editCardIndex, "editCardIndex");
   return (
     <div className="modal_div">
       <div className="title_div">
@@ -35,23 +25,38 @@ const Modal = ({
             onChange={handleFormInput}
           />
         </div>
+        {error === 1 && (
+          <p
+            style={{ color: "red", marginBottom: "0.75rem", fontSize: "12px" }}
+          >
+            *Title is required
+          </p>
+        )}
       </div>
       <div className="desc_div">
         <div className="desc">
           <textarea
-            placeholder="Enter descrpition here"
+            placeholder="Enter descripition here"
             name="desc"
             value={desc}
             onChange={handleFormInput}
           />
         </div>
+        {error === 2 && (
+          <p
+            style={{ color: "red", marginBottom: "0.75rem", fontSize: "12px" }}
+          >
+            *Characters should be more than 25 
+          </p>
+        )}
       </div>{" "}
       <div className="modal_btn">
         <GlobalBtn text="Close Modal" btnAction={() => closeModal()} />{" "}
         <GlobalBtn
-          text="Add Card"
-          btnAction={()=>saveCard(columnId)}
+          text={editCardIndex !== null ? "Edit Card" : "Add Card"}
+          btnAction={() => handleSubmit(columnId)}
         />
+        
       </div>
     </div>
   );

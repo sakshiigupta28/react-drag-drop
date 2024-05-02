@@ -5,6 +5,7 @@ import AddCard from "../AddCard";
 import Modal from "../Modal";
 
 const Dashboard = () => {
+  const [error, setError] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [editCardIndex, setEditCardIndex] = useState(null);
   const [columnData, setColumnData] = useState({
@@ -54,6 +55,18 @@ const Dashboard = () => {
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const handleSubmit = () => {
+    if (title === "") {
+      console.log("title is empty");
+      setError(1);
+    } else if (desc.length <= 25) {
+      console.log("less th 25 word");
+      setError(2);
+    } else {
+      saveCard();
+    }
   };
 
   const saveCard = () => {
@@ -124,6 +137,16 @@ const Dashboard = () => {
     }
   };
 
+  // const handleDeleteCard = (columnId, cardIndex) => {
+  //   const columnName = columns[columnId];
+  //   setColumnData((prevData) => ({
+  //     ...prevData,
+  //     [columnName]: prevData[columnName]?.filter(
+  //       (_, index) => index !== cardIndex
+  //     ),
+  //   }));
+  // };
+
   return (
     <div className="dashboard_div">
       <div className="heading">Dashboard</div>
@@ -151,7 +174,13 @@ const Dashboard = () => {
                 }
                 onClick={() => editCard(card, cardIndex)}
               >
-                <AddCard id={cardIndex} title={card.title} desc={card.desc} />
+                <AddCard
+                  id={cardIndex}
+                  title={card.title}
+                  desc={card.desc}
+                  // handleDeleteCard={handleDeleteCard}
+                  // columnId={columnId}
+                />
               </div>
             ))}
           </div>
@@ -161,11 +190,13 @@ const Dashboard = () => {
         {showModal && (
           <Modal
             closeModal={closeModal}
-            saveCard={saveCard}
+            handleSubmit={handleSubmit}
             formData={formData}
             title={title}
             desc={desc}
             handleFormInput={handleFormInput}
+            error={error}
+            editCardIndex={editCardIndex}
           />
         )}
       </div>
