@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.scss";
 
-const GlobalBtn = ({ text, btnType, icon, isColor, btnBorder , btnAction,colorType }) => {
+const GlobalBtn = ({ text, btnType, isColor, btnBorder , btnAction,colorType }) => {
 
   return (
     <>
@@ -14,7 +14,7 @@ const GlobalBtn = ({ text, btnType, icon, isColor, btnBorder , btnAction,colorTy
       >
         <div className="global_btn_text">
           {text}
-          {icon && <img className={ 'true' ? 'btn_img open' : 'btn_img'} src={icon} />}
+  
           
         </div>
       </button>
