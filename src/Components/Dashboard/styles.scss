@@ -1,4 +1,10 @@
 .dashboard_div {
+  .heading{
+    margin: 1rem ;
+    font-size: 2rem;
+    color: var(--nightShadow);
+    text-align: center;
+  }
   position: relative;
   .modal_box{
     position: absolute;
